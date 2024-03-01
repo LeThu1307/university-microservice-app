@@ -1,0 +1,290 @@
+{
+	"info": {
+		"_postman_id": "12a58621-54e9-43cd-8fc3-88de38e1668f",
+		"name": "microservice",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7135863"
+	},
+	"item": [
+		{
+			"name": "config-server",
+			"item": [
+				{
+					"name": "address-service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Verify Response Status\r",
+									"pm.test(\"Response is ok\",function(){\r",
+									"   pm.response.to.have.status(200); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/address-service/default",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"address-service",
+								"default"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "student-service",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Verify Response Status\r",
+									"pm.test(\"Response is ok\",function(){\r",
+									"   pm.response.to.have.status(200); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8888/student-service/default",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8888",
+							"path": [
+								"student-service",
+								"default"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "address",
+			"item": [
+				{
+					"name": "create address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Verify Response Status\r",
+									"pm.test(\"Response is ok\",function(){\r",
+									"   pm.response.to.have.status(200); \r",
+									"});\r",
+									"\r",
+									"var rdata; \r",
+									"try {\r",
+									"   rdata = JSON.parse(responseBody);\r",
+									"}\r",
+									"catch (err) {\r",
+									"    console.log(err);\r",
+									"    console.log(responseBody);\r",
+									"}\r",
+									"\r",
+									"if(rdata.addressId){\r",
+									"    postman.setEnvironmentVariable('addressId', rdata.addressId);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"street\": \"Vo Thi Sau\",\r\n    \"city\": \"Ho Chi Minh\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/address-service/api/address/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"address-service",
+								"api",
+								"address",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get address by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Verify Response Status\r",
+									"pm.test(\"Response is ok\",function(){\r",
+									"   pm.response.to.have.status(200); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/address-service/api/address/getById/{{addressId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"address-service",
+								"api",
+								"address",
+								"getById",
+								"{{addressId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "student",
+			"item": [
+				{
+					"name": "create student",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Verify Response Status\r",
+									"pm.test(\"Response is ok\",function(){\r",
+									"   pm.response.to.have.status(200); \r",
+									"});\r",
+									"\r",
+									"var rdata; \r",
+									"try {\r",
+									"   rdata = JSON.parse(responseBody);\r",
+									"}\r",
+									"catch (err) {\r",
+									"    console.log(err);\r",
+									"    console.log(responseBody);\r",
+									"}\r",
+									"\r",
+									"if(rdata.id){\r",
+									"    postman.setEnvironmentVariable('studentId', rdata.id);\r",
+									"   \r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Lee\",\r\n    \"lastName\": \"Thu\",\r\n    \"email\": \"tle252@dxc.com\",\r\n    \"addressId\": \"{{addressId}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/student-service/api/student/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"student-service",
+								"api",
+								"student",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Student by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Verify Response Status\r",
+									"pm.test(\"Response is ok\",function(){\r",
+									"   pm.response.to.have.status(200); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "ABC",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9090/student-service/api/student/getById/{{studentId}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"student-service",
+								"api",
+								"student",
+								"getById",
+								"{{studentId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
